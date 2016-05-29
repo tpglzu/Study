@@ -1,0 +1,5 @@
+package com.daipeng.ssi.dao;
+
+public class UserDao {
+
+}

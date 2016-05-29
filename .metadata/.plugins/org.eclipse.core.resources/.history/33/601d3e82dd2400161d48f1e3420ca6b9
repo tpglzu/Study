@@ -1,0 +1,155 @@
+<%@ page language="java" contentType="text/html; charset=utf8"
+    pageEncoding="utf8"%>
+    <%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<link rel="stylesheet" type="text/css" href="css/ext-all.css" />
+<link rel="stylesheet" type="text/css"
+    href="css/ext-theme-classic-all.css" />
+<script type="text/javascript" src="js/ext-all.js"></script>
+  
+  
+<title>用户登陆</title>
+<script type="text/javascript">
+Ext.onReady(function(){
+        initPanel();     
+    });
+     
+    initPanel=function(){
+         var formPanel = new Ext.FormPanel({
+              id: 'loginPanel',
+              labelWidth: 75, 
+              frame:true,
+              bodyStyle:'margin:0 auto',
+              width: 350,
+              defaults: {width: 250},
+              defaultType: 'textfield',
+              items: [{id: 'username',fieldLabel: '用户名',name:'name',allowBlank: false,blankText: '账号不能为空'},
+              {id: 'password', fieldLabel: '密 码',name:'password',inputType: 'password',allowBlank: false,blankText: '密码不能为空'}]
+                 });
+        var win = new Ext.Window({  
+              title:'登陆界面', 
+              width:380,
+              autoHeight: 'true',
+              resizable: false,
+              modal:true,
+              closeAction: 'hide',
+              buttonAlign:'center',
+              items:formPanel,
+              buttons:[{text: '登陆',handler: function(){land();}},
+                  {text: '重置',handler: function(){
+                    Ext.getCmp('username').setValue("");
+                    Ext.getCmp('password').setValue("");
+                    }},{text: '注册',handler: function(){register();}}]
+               });
+                    
+        win.show();
+    };
+     
+    var win1;
+     
+    register = function(){  
+         
+        var registerPanel = new Ext.FormPanel({
+          id: 'registerPanel',
+          labelWidth: 75, 
+          frame:true,
+          bodyStyle:'margin:0 auto',
+          width: 350,
+          defaults: {width: 250},
+          defaultType: 'textfield',
+          items: [{id: 'registername',fieldLabel: '用户名',name:'name1',allowBlank: false,blankText: '账号不能为空'},
+          {id: 'registerpassword', fieldLabel: '登陆密 码',name:'password1',inputType: 'password',allowBlank: false,blankText: '密码不能为空'},
+          {id: 'registerpassword2', fieldLabel: '密码确认',name:'password2',inputType: 'password',allowBlank: false,blankText: '密码不能为空'},
+          {id: 'nichen',fieldLabel: '昵称',name:'nichen1'},
+          {id: 'address',fieldLabel: '地址',name:'address1'}]
+             });
+         
+        win1 = new Ext.Window({  
+              title:'注册界面', 
+              width:380,
+              autoHeight: 'true',
+              resizable: false,
+              modal:true,
+              buttonAlign:'center',
+              items:registerPanel,
+              buttons:[{text: '提交',handler: function(){login();}},
+                  {text: '取消',handler: function(){win1.close();}}]
+               });
+                    
+        win1.show();
+    };
+     
+    login=function(){
+        var name = Ext.getCmp('registername').getValue(); 
+        var password = Ext.getCmp('registerpassword').getValue();
+        var password2 = Ext.getCmp('registerpassword2').getValue();
+        var nichen = Ext.getCmp('nichen').getValue();
+        var address = Ext.getCmp('address').getValue();
+         
+        if(name==" "|| password==" " || password2==""){
+            Ext.MessageBox.alert('提示','账号或密码不能为空！');
+        }
+        else if(password != password2){
+            Ext.MessageBox.alert('提示','两次密码输入不一致！');
+        }else{
+         Ext.Ajax.request({
+       url: "<s:url value='/register.action'/>",
+       method: 'post',
+        params:{
+            name:name,
+            password:password,
+            username:nichen,
+            address:address
+        },
+       success: function (response, options) {
+        Ext.MessageBox.alert('提示','注册成功',function(e){
+            if(e == "ok"){
+                win1.close();
+            } 
+         });
+         
+       },
+       failure: function (response, options) {
+         Ext.MessageBox.alert('注册失败', '请检查您的注册信息！');
+       }
+     });
+        }
+    };
+     
+    land=function(){
+        var name = Ext.getCmp('username').getValue(); 
+        var password = Ext.getCmp('password').getValue();
+         
+         
+        if(name == " " || password == ""){
+             Ext.MessageBox.alert('提示', '账号或密码不能为空！');
+        }
+        else{
+         Ext.Ajax.request({
+       url: "<s:url value='/login.action'/>",
+       method: 'post',
+        params:{
+            name:name,
+            password:password           
+        },
+       success: function (response, options) {
+        Ext.MessageBox.alert('提示','登陆成功!');
+         
+       },
+       failure: function (response, options) {
+         Ext.MessageBox.alert('登陆失败', '您输入的账号或密码错误!');
+       }
+     });
+        }
+    };
+     
+</script>
+  
+</head>
+<body>
+     
+</body>
+</html>

@@ -1,0 +1,32 @@
+package com.daipeng.ssi.service.impl;
+
+package com.broada.demo.serviceImpl;
+
+/**
+ * @author smm
+ */
+  
+import com.broada.demo.dao.UserDao;
+import com.broada.demo.entity.User;
+import com.broada.demo.service.UserDaoServiceInter;
+  
+public class UserDaoServiceImpl implements UserDaoServiceInter {
+  
+    private UserDao userdao;
+    public UserDao getUserdao() {
+        return userdao;
+    }
+    public void setUserdao(UserDao userdao) {
+        this.userdao = userdao;
+    }
+    @Override
+    public boolean insertUser(User user) {
+        return userdao.insertUser(user);
+    }
+    @Override
+    public User querybyname(String name) {
+        // TODO Auto-generated method stub
+        return userdao.queryByname(name);
+    }
+  
+}

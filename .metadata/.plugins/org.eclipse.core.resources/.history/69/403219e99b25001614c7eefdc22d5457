@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!--该属性指定Struts 2应用所需要的国际化资源文件,如果有多份国际化资源文件,则多个资源文件的文件名以英文逗号(,)隔开. -->
+	<constant name="struts.custom.i18n.resources" value="testMsg,errorMsg"></constant>
+	<!--该属性指定需要Struts 2处理的请求后缀,该属性的默认值是action,即所有匹配*.action的请求都由Struts 2处理.如果用户需要指定多个请求后缀,则多个后缀之间以英文逗号(,)隔开. -->
+	<constant name="struts.action.extension" value="do,action"></constant>
+	<!--该属性设置浏览器是否缓存静态内容.当应用处于开发阶段时,我们希望每次请求都获得服务器的最新响应,则可设置该属性为false. -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+
+	<!-- 用户注册类 -->
+	<!-- abstract属性就说明了该action继承自自己定义的基础action，而class采用的registerAction是由spring产生的 -->
+	<package name="register" extends="struts-default">
+		<action name="register" class="registerAction" method="addUser">
+			<!-- 注册成功 -->
+			<result name="success">success.jsp</result>
+			<!-- 注册失败 -->
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="login" class="com.daipeng.ssi.action.RegisterAction" method="loginUser">
+			<!-- 注册成功 -->
+			<result name="success">success.jsp</result>
+			<!-- 注册失败 -->
+			<result name="error">error.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="global" extends="struts-default">
+	
+	   <interceptors>
+            <interceptor name="loginCheck" class="gravehistory.interceptor.LoginCheckInterceptor" />
+            <interceptor-stack name="globalStack">
+                <interceptor-ref name="loginCheck"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        
+        <default-interceptor-ref name="globalStack" />
+
+		<default-action-ref name="noaction" />
+
+		<global-results>
+			<result name="exception">/error/exception.html</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="exception" />
+		</global-exception-mappings>
+
+		<action name="noaction">
+			<result>/error/noaction.html</result>
+		</action>
+		<action name="lang" class="gravehistory.test.struts.LangAction">
+			<result name="success">${currentUrl}</result>
+		</action>
+	</package>
+</struts>

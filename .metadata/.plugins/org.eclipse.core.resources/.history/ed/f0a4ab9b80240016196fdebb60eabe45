@@ -1,0 +1,29 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  <span style="color:#FF0000;">metadata-complete="false"</span>
+ >
+
+  <display-name>Test</display-name>
+  <description>
+    Test
+  </description>
+
+
+  <servlet>
+    <servlet-name>testjsp</servlet-name>
+    <jsp-file>/test.jsp</jsp-file>
+  </servlet>
+  
+
+  
+  <servlet-mapping>
+    <servlet-name>testjsp</servlet-name>
+      <url-pattern>/sms/testjsp/*</url-pattern>
+  </servlet-mapping>
+  
+ 
+
+</web-app>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="User" type="com.daipeng.ssi.entity.User" />
+	<!-- 保存注册信息 -->
+	<insert id="insertUser" parameterClass="User">
+		insert into user (name,password,username,address)values(#name#,#password#,#username#,#address#)
+	</insert>
+
+	<select id="selsectUser" parameterClass="java.lang.String"
+		resultClass="User">
+		select * from user
+		where name = #name#;
+	</select>
+</sqlMap>

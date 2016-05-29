@@ -1,0 +1,35 @@
+package com.daipeng.ssi.dao.impl;
+
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+
+import com.daipeng.ssi.dao.UserDao;
+import com.daipeng.ssi.entity.User;
+
+public class UserDaoImpl extends SqlMapClientDaoSupport implements UserDao{
+	  
+	  
+	  
+    @Override
+    public boolean insertUser(User user) {
+        try {
+            getSqlMapClientTemplate().insert("insertUser", user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }   
+    }
+  
+    @Override
+    public User queryByname(String name) {
+        // TODO Auto-generated method stub
+        try {
+            User user =(User) getSqlMapClientTemplate().queryForObject("selsectUser", name);
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }       
+    }
+     
+}

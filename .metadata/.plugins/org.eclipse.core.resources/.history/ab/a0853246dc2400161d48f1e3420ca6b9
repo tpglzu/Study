@@ -1,0 +1,12 @@
+jdbc.driverClass=org.postgresql.Driver
+jdbc.url=jdbc:postgresql://localhost:5432/test
+jdbc.user=root
+jdbc.password=123456
+jdbc.minPoolSize=5
+jdbc.maxPoolSize=20
+jdbc.maxIdleTime=1800
+jdbc.acquireIncrement=5
+jdbc.maxStatements=50
+jdbc.initialPoolSize=10
+jdbc.idleConnectionTestPeriod=1800
+jdbc.acquireRetryAttempts=30

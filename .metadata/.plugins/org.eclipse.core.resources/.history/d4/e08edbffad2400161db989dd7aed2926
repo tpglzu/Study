@@ -1,0 +1,5 @@
+package com.daipeng.ssi.action;
+
+public class RegisterAction {
+
+}

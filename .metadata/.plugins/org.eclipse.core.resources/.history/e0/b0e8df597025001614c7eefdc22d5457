@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
+		<property name="maxStatements" value="${jdbc.maxStatements}" />
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+		<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
+		<property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}" />
+	</bean>
+
+	<bean id="propertyConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/config_ibatis/jdbc.properties</value>
+		</property>
+	</bean>
+
+	  <!-- 配置iBatis的sqlMapClient，这里当然是交给了spring去处理,其中，将SqlMapConfig文件放到了WEB-INF的iBatis目录下，也是便于管理 -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>/WEB-INF/config_ibatis/SqlMapConfig.xml</value>
+		</property>
+		<!-- 这里使用的数据源就是上面配置的数据源 -->
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="userdaoId" class="com.daipeng.ssi.dao.impl.UserDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<bean id="userDaoServiceId" class="com.daipeng.ssi.service.impl.UserDaoServiceImpl">
+		<property name="userdao" ref="userdaoId">
+		</property>
+	</bean>
+	<!-- 用户注册action -->
+	<bean id="registerAction" name="registerAction"
+		class="com.daipeng.ssi.action.RegisterAction" scope="prototype">
+		<property name="userdaoServiceInter" ref="userDaoServiceId"></property>
+	</bean>
+</beans>

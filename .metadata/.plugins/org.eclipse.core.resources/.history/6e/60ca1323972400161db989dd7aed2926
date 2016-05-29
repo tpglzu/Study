@@ -1,0 +1,5 @@
+package com.daipeng.ssi.entity;
+
+public class User {
+
+}
